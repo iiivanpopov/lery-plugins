@@ -1,0 +1,40 @@
+{
+	"name": "lib-template",
+	"version": "0.1.0",
+	"description": "Template to start creating a new lib",
+	"module": "dist/index.js",
+	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"type": "module",
+	"private": false,
+	"license": "MIT",
+	"author": {
+		"name": "Ivan Popov",
+		"email": "iiivanpopov999@gmail.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/iiivanpopov/lib-template.git"
+	},
+	"homepage": "https://github.com/iiivanpopov/lib-template",
+	"devDependencies": {
+		"@types/bun": "^1.2.17",
+		"typescript": "^5.8.3"
+	},
+	"scripts": {
+		"clean": "powershell Remove-Item -Recurse -Force -Path ./dist",
+		"build:esm": "bun build ./src/index.ts --outdir ./dist --minify --packages external --sourcemap=none --drop console --drop debugger --format esm --target=browser",
+		"build:types": "tsc -p tsconfig.types.json",
+		"build": "bun run build:esm && bun run build:types",
+		"prepublishOnly": "bun clean && bun run build"
+	},
+	"keywords": []
+}
