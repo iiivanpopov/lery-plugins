@@ -1,7 +1,7 @@
 {
-	"name": "lib-template",
+	"name": "@lery/plugins",
 	"version": "0.1.0",
-	"description": "Template to start creating a new lib",
+	"description": "Lery lib plugins, extensions",
 	"module": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"exports": {
@@ -22,9 +22,9 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/iiivanpopov/lib-template.git"
+		"url": "https://github.com/iiivanpopov/lery-plugins.git"
 	},
-	"homepage": "https://github.com/iiivanpopov/lib-template",
+	"homepage": "https://github.com/iiivanpopov/lery-plugins#readme",
 	"devDependencies": {
 		"@types/bun": "^1.2.17",
 		"typescript": "^5.8.3"
