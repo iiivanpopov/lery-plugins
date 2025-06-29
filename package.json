@@ -1,5 +1,5 @@
 {
-	"name": "@lery/plugins",
+	"name": "lery-plugins",
 	"version": "0.1.0",
 	"description": "Lery lib plugins, extensions",
 	"module": "dist/index.js",
@@ -26,15 +26,20 @@
 	},
 	"homepage": "https://github.com/iiivanpopov/lery-plugins#readme",
 	"devDependencies": {
+		"@biomejs/biome": "^2.0.6",
 		"@types/bun": "^1.2.17",
 		"typescript": "^5.8.3"
+	},
+	"peerDependencies": {
+		"lery": "^0.5.0"
 	},
 	"scripts": {
 		"clean": "powershell Remove-Item -Recurse -Force -Path ./dist",
 		"build:esm": "bun build ./src/index.ts --outdir ./dist --minify --packages external --sourcemap=none --drop console --drop debugger --format esm --target=browser",
 		"build:types": "tsc -p tsconfig.types.json",
 		"build": "bun run build:esm && bun run build:types",
-		"prepublishOnly": "bun clean && bun run build"
+		"check": "bunx --bun biome check --write",
+		"prepublishOnly": "bun clean && bun check && bun run build"
 	},
 	"keywords": []
 }
