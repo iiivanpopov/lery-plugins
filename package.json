@@ -31,14 +31,14 @@
 		"typescript": "^5.8.3"
 	},
 	"peerDependencies": {
-		"lery": "^0.5.0"
+		"lery": "^0.5.1"
 	},
 	"scripts": {
 		"clean": "powershell Remove-Item -Recurse -Force -Path ./dist",
 		"build:esm": "bun build ./src/index.ts --outdir ./dist --minify --packages external --sourcemap=none --drop console --drop debugger --format esm --target=browser",
 		"build:types": "tsc -p tsconfig.types.json",
 		"build": "bun run build:esm && bun run build:types",
-		"check": "bunx --bun biome check --write",
+		"check": "bunx --bun biome format --write",
 		"prepublishOnly": "bun clean && bun check && bun run build"
 	},
 	"keywords": []

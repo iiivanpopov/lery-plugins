@@ -4,12 +4,12 @@
     "": {
       "name": "lery-plugins",
       "devDependencies": {
-        "@biomejs/biome": "^2.0.6",
-        "@types/bun": "^1.2.17",
-        "typescript": "^5.8.3",
+        "@biomejs/biome": "latest",
+        "@types/bun": "latest",
+        "typescript": "latest",
       },
       "peerDependencies": {
-        "lery": "^0.5.0",
+        "lery": "latest",
       },
     },
   },
@@ -38,7 +38,7 @@
 
     "bun-types": ["bun-types@1.2.17", "", { "dependencies": { "@types/node": "*" } }, "sha512-ElC7ItwT3SCQwYZDYoAH+q6KT4Fxjl8DtZ6qDulUFBmXA8YB4xo+l54J9ZJN+k2pphfn9vk7kfubeSd5QfTVJQ=="],
 
-    "lery": ["lery@0.5.0", "", {}, "sha512-FxGjpa+VZqXlj0/N1EzSiG60bvGIbmxFFVEJcTe+T3RLMPrrZat/dETTItLj0zMpXP0x4YVJi0OuE0Ea3wx+8A=="],
+    "lery": ["lery@0.5.1", "", {}, "sha512-GnemIk98s4jB77X8j0UrflbHb6G/eLZgTMemjuhlYTYxT0DbZsWqJ+aB/3GErcwS5avgOZrM5P3xec9W3dtzEg=="],
 
     "typescript": ["typescript@5.8.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ=="],
 

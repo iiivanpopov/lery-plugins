@@ -2,10 +2,15 @@
 
 ## 🧩 `lery-plugins` (optional extensions)
 
-- [ ] **Retry mechanism** (exponential backoff)
-- [ ] **Batching** (group multiple queries)
+### Version 0.2.x
+
 - [x] **Query chaining** (dependent queries)
-- [ ] **Optimistic updates** (UI‑first mutations)
-- [ ] **WebSocket / real‑time subscriptions**
-- [x] **Plugin registration API**
+
+### Version 0.3.x
+
+- [ ] **Retry mechanism** (exponential backoff)
+
+### Version 0.4.x
+
+- [ ] **Showcase & Readme**
 - [ ] **DevTools integration** (inspect cache, events, logs)

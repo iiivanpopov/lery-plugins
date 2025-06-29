@@ -1,35 +1,77 @@
-import type { Plugin, QueryBaseConfig } from 'lery'
+import {
+	type Lery,
+	type Plugin,
+	type QueryBaseConfig,
+	type QueryState,
+	serializeKey
+} from 'lery'
 
-type ChainMap = Map<string, unknown>
+type ChainMap = Map<number, unknown>
 
 export function chainedQueries(): Plugin<any> {
+	let leryInstance: Lery<any>
 	const chains: ChainMap = new Map()
 
 	return {
-		onSuccess: <T>(result: T, config: QueryBaseConfig<T, any, any>) => {
-			const chainId = config.meta?.chainedQueries?.chainId
-			if (chainId) {
-				chains.set(chainId, result)
+		onInit(instance) {
+			leryInstance = instance
+		},
+		onBeforeQuery: async <T>(
+			config: QueryBaseConfig<T, any, any>
+		): Promise<QueryBaseConfig<T, any, any>> => {
+			const meta = config.meta?.chainedQueries
+			const dependsOn = meta?.query
+			const chainId = meta?.chainId
+
+			if (dependsOn) {
+				await waitForQueryToComplete(leryInstance, dependsOn)
 			}
+
+			if (chainId) {
+				const key = serializeKey(chainId)
+				const lastResult = chains.get(key)
+
+				const enhancedContext = {
+					...(config.context || {}),
+					chainId,
+					chainedFrom: lastResult
+				}
+
+				const originalQueryFn = config.queryFn
+				config.queryFn = (params: any) => {
+					return originalQueryFn({
+						...params,
+						context: enhancedContext
+					})
+				}
+			}
+
 			return config
 		},
 
-		onBeforeQuery: async <T>(config: QueryBaseConfig<T, any, any>) => {
+		onSuccess: <T>(result: T, config: QueryBaseConfig<T, any, any>) => {
 			const chainId = config.meta?.chainedQueries?.chainId
-
-			if (chainId && !config.context) {
-				config.context = {}
-			}
-
 			if (chainId) {
-				const lastResult = chains.get(chainId)
-				Object.assign(config.context, {
-					chainId,
-					chainedFrom: lastResult
-				})
+				const key = serializeKey(chainId)
+				chains.set(key, result)
 			}
-
-			return config
 		}
 	}
+}
+
+async function waitForQueryToComplete(
+	lery: Lery<any>,
+	key: [string, ...unknown[]]
+): Promise<void> {
+	const entry = lery['getEntry'](key)
+	if (entry.state.isSuccess || entry.state.isError) return
+
+	return new Promise<void>(resolve => {
+		const unsubscribe = entry.subscribe((state: QueryState) => {
+			if (state.isSuccess || state.isError) {
+				unsubscribe()
+				resolve()
+			}
+		})
+	})
 }
